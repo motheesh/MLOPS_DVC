@@ -6,3 +6,6 @@ base:
 data_source:
   source_path: data_given/winequality.csv
   seperator: ","
+
+load_data:
+  raw_dataset_path: data/raw/winequality.csv
