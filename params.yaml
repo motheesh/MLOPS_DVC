@@ -1,0 +1,8 @@
+base:
+  project_name: Mlops_dvc
+  random_state: 22
+  target_column: TARGET
+
+data_source:
+  source_path: data_given/winequality.csv
+  seperator: ","
