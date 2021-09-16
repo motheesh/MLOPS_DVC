@@ -24,8 +24,26 @@ pip install -r requirement.txt
 
 Create data_given folder as data source from client and paste data
 
+```bash
+mkdir data_given
+```
+
+```bash
 git init
+```
 
+```bash
 dvc init
+```
 
+```bash
 dvc add data_given/winequality.csv
+```
+
+```bash
+git add .
+```
+
+```bash
+git commit -m "first commit MLOPS"
+```
