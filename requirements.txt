@@ -9,4 +9,5 @@ pytest
 tox
 flake8
 flask
+flask_cors
 gunicorn
