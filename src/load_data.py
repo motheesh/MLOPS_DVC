@@ -4,16 +4,18 @@
 # Author: Motheesh Jay
 # Created at: 16/09/2021
 
-import get_data
+from get_data import get_params,get_data
 import pandas as pd
 import argparse
 
 
 def load_and_save(config_path):
-    data=get_data.get_data(config_path)
-    new_cols=[col.replace(" ","_") for col in data.columns]
-    params=get_data.get_params(config_path)
+    params=get_params(config_path)
+    source_data_path=params["data_source"]["source_path"]
     load_data_path=params["load_data"]["raw_dataset_path"]
+    seperator=params["data_format"]["seperator"]
+    data=get_data(source_data_path,seperator)
+    new_cols=[col.replace(" ","_") for col in data.columns]
     data.to_csv(load_data_path,index=False,header=new_cols)
     
 

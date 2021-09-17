@@ -1,18 +1,60 @@
 schema: '2.0'
 stages:
   load_data:
-    cmd: python src\load_data.py
+    cmd: python src\load_data.py --config=params.yaml
     deps:
     - path: data_given/winequality.csv
       md5: ccc8d3507eb151f53f760d36abdef888
       size: 91998
     - path: src/get_data.py
-      md5: eae16c1fdde268cc3ae8d2083eda8e45
-      size: 769
+      md5: af5599f7f6799b77f472feb5e1c513c6
+      size: 615
     - path: src/load_data.py
-      md5: c9babc2672b7cb397ab9e7bfeb393263
-      size: 722
+      md5: e7ef29049c9702cc6a730652ccf5188c
+      size: 853
     outs:
     - path: data/raw/winequality.csv
       md5: d98e8f2eca228c11c4de1cc96866a54d
       size: 93598
+  split_data:
+    cmd: python src\split_data.py --config=params.yaml
+    deps:
+    - path: data/raw/winequality.csv
+      md5: d98e8f2eca228c11c4de1cc96866a54d
+      size: 93598
+    - path: src/split_data.py
+      md5: d88779bf613d92025338d5487faaa5e9
+      size: 1208
+    outs:
+    - path: data/processed/test_winequality.csv
+      md5: 48b04a8dd8bbf515324efc802d549fdd
+      size: 28224
+    - path: data/processed/train_winequality.csv
+      md5: d6c34eb3823327375a1425983e1141f2
+      size: 65520
+  train_and_evaluate:
+    cmd: python src\train_and_evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/test_winequality.csv
+      md5: 48b04a8dd8bbf515324efc802d549fdd
+      size: 28224
+    - path: data/processed/train_winequality.csv
+      md5: d6c34eb3823327375a1425983e1141f2
+      size: 65520
+    - path: src/train_and_evaluate.py
+      md5: adf1f2da36614850fb097c3672bcceb3
+      size: 2869
+    params:
+      params.yaml:
+        estimators.ElasticNet.params.alpha: 0.9
+        estimators.ElasticNet.params.l1_ratio: 0.4
+    outs:
+    - path: report/params.json
+      md5: a4aab0167612f21a6085dd05cfafdbf6
+      size: 44
+    - path: report/scores.json
+      md5: 84dfa4fb2592fd3ab63b58e75e292c77
+      size: 100
+    - path: saved_models/model.joblib
+      md5: f3e469305c3034946eefb3e4b87556ac
+      size: 798

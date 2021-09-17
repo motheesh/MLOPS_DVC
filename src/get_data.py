@@ -16,11 +16,8 @@ def get_params(config_path):
         config=yaml.safe_load(yaml_file)
         return config
 
-def get_data(config_path):
-    params=get_params(config_path)
-    source_data_path=params["data_source"]["source_path"]
-    seperator=params["data_source"]["seperator"]
-    data=pd.read_csv(source_data_path,sep=seperator)
+def get_data(path,seperator):
+    data=pd.read_csv(path,sep=seperator)
     return data
 
 
