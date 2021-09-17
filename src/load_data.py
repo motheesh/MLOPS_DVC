@@ -25,4 +25,5 @@ if __name__=="__main__":
     args.add_argument("--config",default="params.yaml")
     parsed_args=args.parse_args()
     config_path=parsed_args.config
+    #load and save
     load_and_save(config_path)
