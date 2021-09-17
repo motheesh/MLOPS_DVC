@@ -9,8 +9,7 @@ app=Flask(__name__)
 CORS(app)
 app.config.from_pyfile("config.py")
 
-
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     labels=['fixed_acidity','volatile_acidity',
     'citric_acid','residual_sugar',
