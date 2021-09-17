@@ -23,9 +23,12 @@ def log_params(path,params):
 def saveModel(params,model):
     model_save_folder=params["model_dir"]["folder"]
     model_name=params["model_dir"]["model_name"]
+    prediction_model=params["webapp_model_dir"]["folder"]
     os.makedirs(model_save_folder, exist_ok=True)
     model_path = os.path.join(model_save_folder,model_name)
+    predictionService=os.path.join(prediction_model,model_name)
     joblib.dump(model, model_path)
+    joblib.dump(model, predictionService)
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))

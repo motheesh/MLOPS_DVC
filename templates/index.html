@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block content %}
+<script>
+  function getPrediction() {
+    var call = true;
+    var req = {};
+    var arr = $.map($("#mydiv [id]"), function (n, i) {
+      var f_id = n.id;
+      var f_val = $("#" + f_id).val();
+      if (f_val == "") {
+        call = false;
+      }
+      req[f_id] = f_val;
+    });
+    if (call) {
+      $.ajax({
+        type: "POST",
+        url: "/predict",
+        data: JSON.stringify(req),
+        success: function (data) {
+          console.log("success");
+          console.log(data["result"]);
+          $("#result").html(data["result"]);
+        },
+        error: function (xhr, status, error) {
+          alert("something went wrong, please try again..");
+        },
+        contentType: "application/json",
+        dataType: "json",
+      });
+    } else {
+      alert("Please enter all values");
+    }
+  }
+</script>
+
+<div class="row p-5 mb-4">
+  <div class="col-md-8">
+    <div class="row" id="mydiv">
+      {% for label in labels%}
+      <div class="col-md-3 py-1">{{label}}</div>
+
+      <div class="col-md-3 py-1">
+        <input id="{{label}}" type="number" class="form-control" />
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="row">
+      <div>predicted quality</div>
+      <div id="result" class="p-5 m-3 border border-secondary"></div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-2 invisible">.</div>
+    <div class="col-md-8 text-center">
+      <button class="btn btn-outline-primary" onclick="getPrediction()">
+        predict
+      </button>
+    </div>
+    <div class="col-md-3 invisible">.</div>
+  </div>
+</div>
+{% endblock %}
