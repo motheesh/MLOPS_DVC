@@ -1,2 +1,2 @@
-debug=True
+debug=False
 params_path="params.yaml"
